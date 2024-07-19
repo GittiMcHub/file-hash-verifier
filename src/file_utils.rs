@@ -13,7 +13,11 @@ pub fn read_sum_file(path: PathBuf, filename: String) -> Result<String, std::io:
 
     match lines.len() {
         0 => return Err(Error::new(ErrorKind::Other, "File empty")), // Empty file
-        1 => Ok(lines[0].clone()), // Single line
+        1 => {
+            let replaced_string = lines[0].clone().replace(&filename, "");
+            let checksum = replaced_string.trim();
+            Ok(checksum.to_string())
+        }, // Single line
         _ => {
             println!("More than one row");
             // Find the line containing "ethxyz.iso"
