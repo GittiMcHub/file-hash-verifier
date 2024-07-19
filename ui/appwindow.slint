@@ -1,0 +1,112 @@
+import { AboutSlint, Button, VerticalBox, LineEdit, ComboBox, TabWidget } from "std-widgets.slint";
+
+export component AppWindow inherits Window{
+
+    out property <string> algo <=> comboAlgo.current-value;
+    in-out property <string> file <=> inputFile.text;
+    in-out property <string> fileSum <=> txtFileSum.text;
+    in-out property <string> checksum <=> inputChecksum.text;
+    in-out property <brush> backgroundColor <=> rectResult.background;
+    
+    in-out property <string> result;
+
+    callback file_button_clicked <=> btnSelectFile.clicked;
+    callback checksum_file_button_clicked <=> btnSelectChecksumFile.clicked;
+    callback check_button_clicked <=> btnCheck.clicked;
+    
+    
+    VerticalBox {
+        alignment: start;
+        Text {
+            text: "Hash verifier";
+            font-size: 24px;
+            horizontal-alignment: center;
+        }
+
+        TabWidget {
+            Tab {
+                title: "Verify";
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 8px;
+                    HorizontalLayout {
+                        Text {
+                            text: "Algorithm: ";
+                            font-size: 12px;
+                            vertical-alignment: center;
+                        }
+                        comboAlgo := ComboBox {
+                            width: 50%;
+                            height: 24px;
+                            model: ["SHA256", "SHA512", "MD5"];
+                            current-value: "SHA256";
+                        }
+                    }
+                    Text {
+                        text: "File";
+                        font-size: 12px;
+                        vertical-alignment: center;
+                    }
+                    HorizontalLayout {
+                        inputFile := LineEdit {
+                            placeholder-text: @tr("File Path");
+                            horizontal-alignment: center;
+                            enabled: false;
+                        }
+                        btnSelectFile := Button { 
+                            primary: true;
+                            text: "..."; 
+                        } 
+                    }
+                    txtFileSum := Text {
+                        font-size: 12px;
+                        color: grey;
+                        horizontal-alignment: left;
+                    }
+
+                    Text {
+                        text: "Checksum";
+                        font-size: 12px;
+                        horizontal-alignment: left;
+                    }
+                    HorizontalLayout {
+                        inputChecksum := LineEdit {
+                            placeholder-text: @tr("Paste checksum");
+                            horizontal-alignment: center;
+                        }
+                        btnSelectChecksumFile := Button { 
+                            text: "..."; 
+                        } 
+                    }
+
+                    Text {
+                        text: "-------------------------------------";
+                        font-size: 12px;
+                        horizontal-alignment: center;
+                    }
+                    btnCheck := Button { 
+                        primary: true;
+                        text: "Check"; 
+                    } 
+                    rectResult := Rectangle {
+                        Text {
+                            text: "Result: \{result}";
+                            font-size: 16px;
+                            horizontal-alignment: center;
+                        }
+                    }
+                    
+                }
+            }
+            Tab {
+                title: "About";
+                AboutSlint {
+                    preferred-height: 35px;
+                }
+            }
+        }
+
+        
+
+    }
+}

@@ -1,0 +1,18 @@
+[package]
+name = "file-hash-verifer"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+md5 = "0.7.0"
+native-dialog = "0.7.0"
+sha2 = "0.10.8"
+slint = "1.7.0"
+strum = "0.26.3"
+strum_macros = "0.26.4"
+
+[build-dependencies]
+slint-build = "1.7"
